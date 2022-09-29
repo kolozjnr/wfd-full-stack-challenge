@@ -8,7 +8,8 @@ This is a simple app created in Laravel. You can use the "sample-data.csv" file 
 
 Create a PGP key.
 Once you have completed the challenge, send an encrypted email, confirming your availability for Telephonic Technical Interview during the week, to cecile@womenfirstdigital.org with your public PGP key attached.
-You will find the public key for cecile@womenfirstdigital.org attached in the email I sent you for this challenge.
+
+You will find the public key for cecile@womenfirstdigital.org attached in the email I sent you for this challenge or you can download my public key here https://drive.google.com/file/d/11J1RAMaz422M7if4zaDSjwk5M-NpND4E/view?usp=sharing
 
 ---
 ## Problems
