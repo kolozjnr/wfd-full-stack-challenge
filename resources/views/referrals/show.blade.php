@@ -8,10 +8,6 @@
                 <div class="panel-heading"><h1>Referrals</h1></div>
 
                 <div class="panel-body">
-                    
-                    @if (!Auth::user()->hasRole('executive'))
-                        <div>@include('partials.filterReferrals') @include('partials.createReferralButton')</div>
-                    @endif
                     @if (session('status'))
                         <div class="alert alert-success">
                             {{ session('status') }}
@@ -23,7 +19,7 @@
                         </div>
                     @endif
                     <div class="col-md-12">
-                        <form action="{{route('Search')}}" class="" method="GET">
+                        <form action="search" class="" method="GET">
                             {{ csrf_field() }}
                             <div class=" col-8" >
                                 <div class="col-md-6" style="display: flex; margin-bottom: 3px; "> 
@@ -55,11 +51,10 @@
                             <th>Type of Service</th>
                             <th>Note</th>
                             <th>Womens Evaluation</th>
-                            <th>Action</th>
                         </tr>
-                        @foreach($referrals as $referral)
                         <tr>
-                            <td><a href="{{ route('show',['referral' =>$referral]) }}">{{ $referral->country }} </a></td>
+                            
+                            <td>{{ $referral->country }} </td>
                             <td>{{ $referral->reference_no }} </td>
                             <td>{{ $referral->organisation }} </td>
                             <td>{{ $referral->province }} </td>
@@ -79,15 +74,32 @@
                             <td>{{ $referral->type_of_service }} </td>
                             <td>{{ $referral->note }} </td>
                             <td>{{ $referral->womens_evaluation }} </td>
-                            
                         </tr>
-                        @endforeach
                     </table>
                 </div>
 
-                <div class="panel-footer">
-                    {{ $referrals->links() }}
+
+                <div class="card-body col-md-6">
+                    <h5>Display Comments</h5>
+                
+                    @include('partials.replies', ['comments' => $referral->comments, 'referral' => $referral->id])
+    
+                    <hr />
                 </div>
+    
+                   <div class="card-body col-md-6">
+                    <h5>Leave a comment</h5>
+                    <form method="post" action="{{ route('comment.add') }}">
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <textarea name="comment" id="" cols="30" rows="10" class="form-control"></textarea>
+                            <input type="hidden" name="ref_id" value="{{ $referral->id }}" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-sm btn-success py-0" style="font-size: 0.8em;" value="Add Comment" />
+                        </div>
+                    </form>
+                   </div>
 
             </div>
         </div>

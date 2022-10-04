@@ -1,0 +1,1 @@
+<a href="/register" class="btn btn-success pull-right">Add user</a>

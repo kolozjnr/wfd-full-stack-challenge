@@ -9,9 +9,6 @@
 
                 <div class="panel-body">
                     
-                    @if (!Auth::user()->hasRole('executive'))
-                        <div>@include('partials.filterReferrals') @include('partials.createReferralButton')</div>
-                    @endif
                     @if (session('status'))
                         <div class="alert alert-success">
                             {{ session('status') }}
@@ -22,8 +19,9 @@
                             {{ session('error') }}
                         </div>
                     @endif
+                    
                     <div class="col-md-12">
-                        <form action="{{route('Search')}}" class="" method="GET">
+                        <form action="/search" class="" method="GET">
                             {{ csrf_field() }}
                             <div class=" col-8" >
                                 <div class="col-md-6" style="display: flex; margin-bottom: 3px; "> 
@@ -33,7 +31,7 @@
                             </div>
                         </form>
                     </div>
-                    <table class="table table-hover">
+                    <table class="table">
                         <tr>
                             <th>Country</th>
                             <th>Reference No</th>
@@ -55,11 +53,10 @@
                             <th>Type of Service</th>
                             <th>Note</th>
                             <th>Womens Evaluation</th>
-                            <th>Action</th>
                         </tr>
                         @foreach($referrals as $referral)
                         <tr>
-                            <td><a href="{{ route('show',['referral' =>$referral]) }}">{{ $referral->country }} </a></td>
+                            <td>{{ $referral->country }} </td>
                             <td>{{ $referral->reference_no }} </td>
                             <td>{{ $referral->organisation }} </td>
                             <td>{{ $referral->province }} </td>
@@ -79,15 +76,11 @@
                             <td>{{ $referral->type_of_service }} </td>
                             <td>{{ $referral->note }} </td>
                             <td>{{ $referral->womens_evaluation }} </td>
-                            
                         </tr>
                         @endforeach
                     </table>
                 </div>
 
-                <div class="panel-footer">
-                    {{ $referrals->links() }}
-                </div>
 
             </div>
         </div>

@@ -8,6 +8,12 @@
                 <div class="panel-heading">Login</div>
 
                 <div class="panel-body">
+                    @if (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+                    @include('errors')
                     <form class="form-horizontal" method="POST" action="{{ route('login') }}">
                         {{ csrf_field() }}
 

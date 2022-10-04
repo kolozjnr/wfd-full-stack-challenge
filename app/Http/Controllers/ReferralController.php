@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Referral;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class ReferralController extends Controller
@@ -11,6 +12,7 @@ class ReferralController extends Controller
     public function __construct() {
         $this->middleware('auth');
     }
+    protected $guarded = [];
     /**
      * Display a listing of the resource.
      *
@@ -21,6 +23,7 @@ class ReferralController extends Controller
         // echo $country; 
 
         $countries = array();
+        $cities = array();$countries = array();
         $cities = array();
         $country_filter = false;
         //
@@ -102,7 +105,9 @@ class ReferralController extends Controller
      */
     public function show(Referral $referral)
     {
-        //
+        //$referral = Referral::find($referral);
+        return view('referrals.show', compact('referral'));
+
     }
 
     /**
@@ -199,5 +204,23 @@ class ReferralController extends Controller
             }
         }
         return redirect('referrals');
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->get('search');
+        $referrals = DB::table('referrals')->where([
+            ['city','like','%'.$search. '%']
+            ])
+        ->orWhere([
+            ['organisation','like','%'.$search. '%']
+            ])->get();
+        if($referrals->isEmpty())
+        {
+            return back()->with('error', "No Record Found For '$search'");
+        }
+        else{
+           return view('referrals.searchresult', compact('referrals'));
+        }
     }
 }
